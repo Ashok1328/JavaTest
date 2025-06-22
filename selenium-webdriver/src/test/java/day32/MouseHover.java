@@ -21,7 +21,7 @@ public class MouseHover {
 		Actions act = new Actions(driver);
 		
 		//mouse hover 
-		act.moveToElement(demo).moveToElement(mobile).build().perform();
+		act.moveToElement(demo).moveToElement(mobile).click().build().perform();
 		
 	}
 }
