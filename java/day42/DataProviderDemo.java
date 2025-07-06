@@ -19,16 +19,16 @@ public class DataProviderDemo {
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 	}
 	
-	@Test
-	void testLogin() throws InterruptedException
+	@Test(dataProvider="dp")
+	void testLogin(String email, String password) throws InterruptedException
 	{
 		driver.get("https://tutorialsninja.com/demo/index.php?route=account/login");
 		driver.manage().window().maximize();
 		
-		driver.findElement(By.xpath("//input[@id='input-email']")).sendKeys("ashok@1gmail.com");
-		driver.findElement(By.xpath("//input[@id='input-password']")).sendKeys("ashok123");
+		driver.findElement(By.xpath("//input[@id='input-email']")).sendKeys(email);
+		driver.findElement(By.xpath("//input[@id='input-password']")).sendKeys(password);
 		driver.findElement(By.xpath("//input[@value='Login']")).click();
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		
 		boolean status = driver.findElement(By.xpath("//span[normalize-space()='My Account']")).isDisplayed();
 		if(status == true)
@@ -49,10 +49,10 @@ public class DataProviderDemo {
 	}
 
 	
-	@DataProvider
-	String[][] loginData()
+	@DataProvider(name="dp")
+	Object[][] loginData()
 		{
-			String data[][] = {
+			Object data[][] = {
 					{"abc@gmail.com", "test123"},
 					{"xyz@gmail.com", "test012"},
 					{"ram@gmail.com", "test@123"},
