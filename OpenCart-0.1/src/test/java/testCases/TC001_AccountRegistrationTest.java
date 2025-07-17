@@ -1,63 +1,53 @@
 package testCases;
 
-import java.time.Duration;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 import pageObjects.AccountRegistrationPage;
 import pageObjects.HomePage;
+import testBase.BaseClass;
 
-public class TC001_AccountRegistrationTest {
-	
-	public WebDriver driver;
-	
-	@BeforeClass
-	public void setUp() throws InterruptedException
-	{
-		driver = new ChromeDriver();
-		driver.manage().deleteAllCookies();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-		
-		driver.get("https://demo.opencart.com/");
-		driver.manage().window().maximize();
-		Thread.sleep(5000);
-	}
-	
+public class TC001_AccountRegistrationTest extends BaseClass {
+
 	@Test
-	public void verify_account_registration()
-	{
-		HomePage hp = new HomePage(driver);
-		hp.clickMyAccount();
-		hp.clicRegister();
-		
-		AccountRegistrationPage regpage = new AccountRegistrationPage(driver);
-//		
-//		regpage.setFirstName(randomeString().toUpperCase());
-//		regpage.setLastName(randomeString().toUpperCase());
-//		regpage.setEmail(randomeString()+"@gmail.com"); //randomly generate the email
-		
-		regpage.setFirstName("kriti");
-		regpage.setLastName("Neupane");
-		regpage.setEmail("kriti22@gmail.com");
-		
-	//	String password = randomAlphaNumeric();
-		
-		regpage.setPassword("kriti2228");
-		
-		regpage.setPrivacyPolicy();
-		regpage.clickContinue();
-		
-		String confmsg = regpage.getConfirmationMsg();
-		Assert.assertEquals(confmsg, "Your Account Has Been Created!");
-		
+	public void verify_account_registration() {
+		logger.info("******** Starting TC001_AccountRegistrationTest ******");
+
+		try {
+			HomePage hp = new HomePage(driver);
+			hp.clickMyAccount();
+			logger.info("Clicked on MyAccount link....");
+
+			hp.clickRegister();
+			logger.info("Cicked in Register link.....");
+
+			AccountRegistrationPage regpage = new AccountRegistrationPage(driver);
+
+			logger.info("Providing customer details....");
+			regpage.setFirstName(randomString().toUpperCase());
+			regpage.setLastName(randomString().toUpperCase());
+			regpage.setEmail(randomString() + "@gmail.com"); // randomly generate the email
+
+//		regpage.setFirstName("kriti");
+//		regpage.setLastName("Neupane");
+//		regpage.setEmail("kriti22@gmail.com");
+
+			String password = randomAlphaNumeric();
+
+			regpage.setPassword(password);
+
+			regpage.setPrivacyPolicy();
+			regpage.clickContinue();
+
+			logger.info("Validating expected message....");
+			String confmsg = regpage.getConfirmationMsg();
+			Assert.assertEquals(confmsg, "Your Account Has Been Created!");
+		} catch (Exception e) {
+			logger.error("Test failed....");
+			logger.debug("Debug logs...");
+			Assert.fail();
+		}
+		logger.info("****** Finished TC001_AccountRegistrationTest ****");
 	}
-	
-	@AfterClass
-	public void tearDown()
-	{
-		driver.quit();
-	}
+
 }

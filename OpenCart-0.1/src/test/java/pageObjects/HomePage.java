@@ -24,7 +24,7 @@ public class HomePage extends BasePage {
 		lnkMyaccount.click();
 	}
 	
-	public void clicRegister()
+	public void clickRegister()
 	{
 		lnkRegister.click();
 	}
