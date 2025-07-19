@@ -48,7 +48,7 @@ public Properties p;
 		driver.manage().deleteAllCookies();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		
-		driver.get(p.getProperty("appURL"));
+		driver.get(p.getProperty("appURL1"));
 		driver.manage().window().maximize();
 		
 	}
